@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { client, urlFor } from '../../lib/sanityClient';
+
+// 1. Esta função busca todos os produtos e diz ao Astro para criar uma página para cada um
+export async function getStaticPaths() {
+  const products = await client.fetch(`*[_type == "product"]{"slug": slug.current}`);
+
+  type Product = { slug: string };
+  return products.map((product: Product) => ({
+    params: { slug: product.slug }, 
+    props: { slug: product.slug }, 
+  }));
+}
+
+const { slug } = Astro.props;
+
+// 2. Busca os dados completos do produto específico desta página
+const product = await client.fetch(`*[_type == "product" && slug.current == $slug][0]`, { slug });
+---
+<BaseLayout>
+  <div class="max-w-4xl mx-auto p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+      <div>
+        <img 
+          src={urlFor(product.image).width(600).url()} 
+          alt={product.title}
+          class="w-full rounded-lg shadow-lg"
+        />
+      </div>
+
+      <div class="flex flex-col h-full">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">{product.title}</h1>
+        <p class="text-gray-600 mb-6 text-lg">{product.description}</p>
+
+        <div class="mt-auto">
+          <p class="text-3xl font-extrabold text-gray-900 mb-6">
+            R$ {product.price}
+          </p>
+          <a 
+            href={product.shopeeUrl} 
+            target="_blank"
+            class="w-full text-center bg-orange-500 text-white font-bold py-3 px-6 rounded-lg text-lg hover:bg-orange-600 transition-colors"
+          >
+            Comprar na Shopee
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,11 +1,28 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductGallery from '../components/ProductGallery.vue';
+import { client } from '../lib/sanityClient';
+import ProductCard from '../components/ProductCard.vue';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const products = await client.fetch(`*[_type == "product"]{..., "slug": slug.current}`);
+const categories = await client.fetch(`*[_type == "category"] | order(title asc)`);
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout>
+  <div class="text-center my-8">
+    <h2 class="text-3xl font-bold">Nossos Produtos:</h2>
+  </div>
+
+  <ProductGallery client:load products={products} categories={categories} />
+</BaseLayout>
+
+<style>
+  .product-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+</style>
