@@ -1,16 +1,28 @@
 ---
-// Caminho: src/layouts/BaseLayout.astro
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
----
 
+export interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Biscuit da Isa - Artesanato em Biscuit',
+  description = 'Loja de artesanato em biscuit, chaveiros, apliques e peças personalizadas feitas a mão.'
+} = Astro.props;
+---
 <html lang="pt-br">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Biscuit da Isa</title>
+    
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
     <link rel="icon" type="image/png" href="/foto-perfil.png" />
+    <ViewTransitions />
   </head>
   <body>
     <Header />

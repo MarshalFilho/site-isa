@@ -2,27 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductGallery from '../components/ProductGallery.vue';
 import { client } from '../lib/sanityClient';
-import ProductCard from '../components/ProductCard.vue';
 
-const products = await client.fetch(`*[_type == "product"]{..., "slug": slug.current}`);
+// A busca de produtos e categorias continua a mesma
+const products = await client.fetch(`*[_type == "product"]{..., "slug": slug.current, category->}`);
 const categories = await client.fetch(`*[_type == "category"] | order(title asc)`);
 ---
-
 <BaseLayout>
-  <div class="text-center my-8">
-    <h2 class="text-3xl font-bold">Nossos Produtos:</h2>
-  </div>
-
   <ProductGallery client:load products={products} categories={categories} />
 </BaseLayout>
-
-<style>
-  .product-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 24px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px;
-  }
-</style>

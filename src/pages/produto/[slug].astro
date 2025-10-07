@@ -15,10 +15,9 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.props;
 
-// 2. Busca os dados completos do produto específico desta página
 const product = await client.fetch(`*[_type == "product" && slug.current == $slug][0]`, { slug });
 ---
-<BaseLayout>
+<BaseLayout title={product.title + " | Biscuit da Isa"} description={product.description}>
   <div class="max-w-4xl mx-auto p-6">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
       <div>
