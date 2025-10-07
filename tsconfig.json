@@ -9,6 +9,7 @@
     "**/*.astro"
   ],
   "compilerOptions": {
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "types": ["vite/client"]
   }
 }
