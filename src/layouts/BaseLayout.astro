@@ -1,6 +1,7 @@
 ---
-import Header from '../components/Header.astro';
+import Header from '../components/Header.vue';
 import Footer from '../components/Footer.astro';
+import { Icon } from 'astro-icon/components';
 import '../styles/global.css';
 export interface Props {
   title?: string;
@@ -31,10 +32,19 @@ const {
   </head>
 
   <body class=" font-sans"> 
-    <Header />
+    <Header client:load />
     <main>
       <slot />
     </main>
     <Footer />
+    <a 
+      href="https://www.instagram.com/isa_biscuits16?utm_source=ig_web_button_share_sheet&igsh=MW1sa2h0ZnV3ZW94" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      aria-label="Siga-nos no Instagram"
+      class="fixed bottom-6 right-6 z-50 p-3 rounded-full shadow-lg transition-transform hover:scale-110 bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400"
+    >
+      <Icon name="mdi:instagram" class="w-6 h-6 text-white" />
+    </a>
   </body>
 </html>

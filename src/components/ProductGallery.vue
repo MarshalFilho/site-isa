@@ -7,7 +7,7 @@
           v-for="category in categories"
           :key="category._id"
           @click="selectCategory(category._id)" 
-          class="group relative block h-48 rounded-lg overflow-hidden shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+          class="group relative block h-48 rounded-lg overflow-hidden shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
           
           <img 
             v-if="category.image"
@@ -47,7 +47,7 @@
         <h3 class="mt-2 text-lg font-medium text-gray-900">Nenhum resultado</h3>
         <p class="mt-1 text-sm text-gray-500">Não encontramos produtos com os filtros selecionados.</p>
         <div class="mt-6">
-          <button @click="clearFilters" class="inline-flex items-center rounded-md border border-transparent bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+          <button @click="clearFilters" class="inline-flex items-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
             Limpar Filtros
           </button>
         </div>
@@ -178,7 +178,7 @@ function clearFilters() {
 function buttonClass(categoryId) {
   const base = 'px-4 py-2 rounded-full text-sm font-semibold transition-colors';
   if (selectedCategory.value === categoryId) {
-    return `${base} bg-orange-500 text-white`;
+    return `${base} bg-emerald-500 text-white`;
   }
   return `${base} bg-gray-200 text-gray-700 hover:bg-gray-300`;
 }
